@@ -11,7 +11,8 @@ from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 from src.components.data_transformation import DataTransformation
 from src.components.data_transformation import DataTransformationConfig
-
+from src.components.model_trainer import Modeltrainerconfig
+from src.components.model_trainer import modeltrainer
 @dataclass
 class DataIngestionConfig:
 
@@ -23,10 +24,10 @@ class DataIngestionConfig:
 class DataIngestion:
     def __init__(self):
         self.ingestion_config = DataIngestionConfig()
-        logging.info("Entered dataingetsion model")
+        logging.info("Entered dataingestion model")
 
     def initiate_data_ingestion(self):
-        logging.info("Entered dataingetsion model")
+        logging.info("Entered dataingestion model")
         try:
             df = pd.read_csv('/Users/kavyabaltha/Desktop/MachineLearning/notebook/data/StudentsPerformance.csv')
             logging.info("Read the dataset as dataframe")
@@ -35,7 +36,7 @@ class DataIngestion:
             train_set, test_set = train_test_split(df, test_size=0.2, random_state=50)
             train_set.to_csv(self.ingestion_config.train_data_path, index=False, header=True)
             test_set.to_csv(self.ingestion_config.test_data_path, index=False, header=True)
-            logging.info(" Dataingetsion is compelete")
+            logging.info(" dataingestion is complete")
             return (
                 self.ingestion_config.train_data_path,
                 self.ingestion_config.test_data_path
@@ -51,5 +52,9 @@ if __name__ == "__main__":
 
     data_transformation = DataTransformation()
     train_arr, test_arr, _ = data_transformation.initiate_data_transformation(train_data, test_data)
+
+    model_train = modeltrainer()
+    print(model_train.initiate_model_trainer(train_arr, test_arr))
+
 
 # test
